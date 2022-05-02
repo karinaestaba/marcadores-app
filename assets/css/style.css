@@ -44,10 +44,9 @@ button[disabled]{
 
 .list-group{
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    grid-template-rows: auto 1fr;
+    grid-template-columns: 1fr;
     gap: 2rem;
-    background: rgba(250, 250, 250, 0.61);
+    background: rgba(250, 250, 250, 0.822);
     text-overflow: ellipsis;
     min-height: 70vh;
     color: #333333;
@@ -65,6 +64,7 @@ button[disabled]{
     border-bottom: 1px solid #e8e7ee;
     padding-left: 0;
     padding-right: 0;
+    overflow: hidden;
 }
 
 .list-group-item a{
@@ -135,6 +135,31 @@ button[disabled]{
     color: #e86e8d;
 }
 
+.search-form{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+}
+
+.search-bar{
+    padding: 0 1rem;
+    background-color: white;
+    border-radius: 3px;
+}
+
+.search-form button{
+    border: none;
+    font-size: 1.5rem;
+    background: transparent;
+    min-width: 50px;
+    color: #b3b3b3;
+}
+
+.search-form button > .icon{
+    display: block;
+    transform: rotate(45deg);
+}
+
 .form-control{
     border: none;
     color: #b3b3b3;
@@ -155,3 +180,9 @@ button[disabled]{
     color: white;
 }
 
+@media screen and (min-width: 768px){
+    .list-group{
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        grid-template-rows: auto 1fr;
+    }
+}

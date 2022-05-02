@@ -3,11 +3,14 @@ const {shell, ipcRenderer} = require('electron');
 class Bookmark{
     constructor(){
         this.messageError = document.querySelector('.error-message');
+        
         this.bookmarkCreateForm = document.querySelector('.bookmark-create-form');
         this.bookmarkUrl = document.querySelector('.bookmark-create-url');
         this.bookmarkButton = document.querySelector('.bookmark-create-button');
         this.bookmarks = document.querySelector('.bookmarks');
 
+        this.searchQuery = document.querySelector('.search-query');
+        this.searchForm = document.querySelector('.search-form');
         this.parser = new DOMParser();
 
         this.addEventListeners();
@@ -16,6 +19,10 @@ class Bookmark{
     addEventListeners(){
         this.bookmarkUrl.addEventListener('keyup', () => {
             this.bookmarkButton.disabled = !this.bookmarkUrl.validity.valid;
+        });
+
+        this.searchQuery.addEventListener('keyup', () => {
+            this.showBookmarks();
         });
 
         this.bookmarkCreateForm.addEventListener('submit', this.createBookmark.bind(this));
@@ -55,7 +62,13 @@ class Bookmark{
     }
 
     getLinks(){
-        return Object.keys(localStorage).map(key => JSON.parse(localStorage.getItem(key)));
+        let links = Object.keys(localStorage).map(key => JSON.parse(localStorage.getItem(key)));
+
+        if(this.searchQuery.value.length > 0){
+            links = links.filter(link => link.title.toLowerCase().indexOf(this.searchQuery.value.toLocaleLowerCase()) > -1);
+        }
+
+        return links;
     }
 
     generateBookmarkHTML(bookmark){
