@@ -1,0 +1,157 @@
+html{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 10px;
+    background: #e8e7ee;
+    font-weight: 100;
+}
+
+.bg-blur{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    filter: blur(8px);
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: .8;
+    background-image: url(../img/fondo.jpeg);
+    z-index: -1;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.container-fluid{
+    z-index: 1;
+}
+
+*{
+    font-family: 'Lato', sans-serif;
+}
+
+button:disabled,
+button[disabled]{
+    opacity: .4;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
+    text-shadow: none;
+}
+
+.list-group{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-rows: auto 1fr;
+    gap: 2rem;
+    background: rgba(250, 250, 250, 0.61);
+    text-overflow: ellipsis;
+    min-height: 70vh;
+    color: #333333;
+    padding: 1rem
+}
+
+.list-group-item{
+    background-color: transparent;
+    border: none;
+    color: #333333;
+
+    display: flex;
+    gap: .5rem;
+
+    border-bottom: 1px solid #e8e7ee;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.list-group-item a{
+    display: block;
+    color: #333333;
+    text-decoration: none;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.list-group-item a:hover{
+    opacity: .6;
+    transition: opacity .5s;
+}
+
+.list-group-item .title::first-letter {
+    text-transform: uppercase;
+}
+
+.list-group-item div{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.list-group-item div > a{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    opacity: .7;
+}
+
+.list-group-item h2{
+    display: flex;
+    gap: .5rem;
+    font-weight: 400;
+}
+
+.list-group-item .icon{
+    color: #e86e8d
+}
+
+.bookmark-create{
+    padding: 1rem;
+    background-color: white;
+    border-radius: 3px;
+}
+
+.bookmark-create-form{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+}
+
+.bookmark-create-form button{
+    border: none;
+    font-size: 1.5rem;
+    background: transparent;
+    min-width: 50px;
+    color: #b3b3b3;
+}
+
+.bookmark-create-form button:hover{
+    cursor: pointer;
+}
+
+.bookmark-create-form button:active{
+    color: #e86e8d;
+}
+
+.form-control{
+    border: none;
+    color: #b3b3b3;
+}
+
+.form-control:focus{
+    color: inherit;
+    border: none;
+    border-bottom: 1px solid #e8e8e8;
+    border-radius: 0;
+    padding-left: 0;
+    box-shadow: none;
+    transition: all 1s;
+}
+
+.alert-warning{
+    background-color: #e86e8d;
+    color: white;
+}
+

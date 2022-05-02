@@ -22,9 +22,13 @@
   "bugs": {
     "url": "https://gitlab.com/kestaba/marcadores-app/issues"
   },
+  "files": [
+    "build/*"
+  ],
   "homepage": "https://gitlab.com/kestaba/marcadores-app#readme",
   "devDependencies": {
     "electron": "^13.1.2",
+    "electron-packager": "^15.5.1",
     "electron-reload": "^1.5.0"
   }
 }

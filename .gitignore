@@ -144,3 +144,5 @@ temp/
 # End of https://www.toptal.com/developers/gitignore/api/node,visualstudiocode
 
 release-builds/
+
+marcadores-app-win32-x64/

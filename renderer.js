@@ -1,4 +1,4 @@
-const {shell} = require('electron');
+const {shell, ipcRenderer} = require('electron');
 
 class Bookmark{
     constructor(){
@@ -7,7 +7,6 @@ class Bookmark{
         this.bookmarkUrl = document.querySelector('.bookmark-create-url');
         this.bookmarkButton = document.querySelector('.bookmark-create-button');
         this.bookmarks = document.querySelector('.bookmarks');
-        this.bookmarksDelete = document.querySelector('.bookmarks-remove');
 
         this.parser = new DOMParser();
 
@@ -20,8 +19,6 @@ class Bookmark{
         });
 
         this.bookmarkCreateForm.addEventListener('submit', this.createBookmark.bind(this));
-
-        this.bookmarksDelete.addEventListener('click', this.deleteBookmarks.bind(this));
 
         this.bookmarks.addEventListener('click', this.openBookmarkLink.bind(this));
     }
@@ -62,7 +59,17 @@ class Bookmark{
     }
 
     generateBookmarkHTML(bookmark){
-        return `<li class="list-group-item py-4"><h4 class="h6">${bookmark.title}</h4><a class="small text-muted" href="${bookmark.url}">${bookmark.url}</a></li>`;
+        return `<li class="list-group-item py-4">
+                    <span class="icon">🗋</span>
+                    <a href="${bookmark.url}" target="_blank">
+                        <h2 class="h6">
+                            <span class="title">${bookmark.title}</span>
+                        </h2>
+                        <div>
+                            <span class="small text-muted">${bookmark.url}</span>
+                        </div>
+                    </a>
+                </li>`;
     }
 
     showBookmarks(){
@@ -99,3 +106,7 @@ class Bookmark{
 let bookmarksObj = new Bookmark();
 
 bookmarksObj.showBookmarks();
+
+ipcRenderer.on('actions:delete-bookmarks', (e, action)  => {
+    bookmarksObj.deleteBookmarks();
+})
