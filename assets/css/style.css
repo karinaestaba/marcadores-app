@@ -1,4 +1,8 @@
-html{
+*,
+*::after,
+*::before{
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
@@ -6,6 +10,7 @@ body{
     margin: 10px;
     background: #e8e7ee;
     font-weight: 100;
+    position: relative;
 }
 
 .bg-blur{
@@ -16,13 +21,14 @@ body{
     right: 0;
     filter: blur(8px);
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
     background-color: black;
     opacity: .8;
     background-image: url(../img/fondo.jpeg);
     z-index: -1;
     background-repeat: no-repeat;
     background-size: cover;
+    background-attachment: fixed;
 }
 
 .container-fluid{
@@ -45,10 +51,8 @@ button[disabled]{
 .list-group{
     display: grid;
     grid-template-columns: 1fr;
-    gap: 2rem;
     background: rgba(250, 250, 250, 0.822);
     text-overflow: ellipsis;
-    min-height: 70vh;
     color: #333333;
     padding: 1rem
 }
@@ -58,13 +62,18 @@ button[disabled]{
     border: none;
     color: #333333;
 
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
     gap: .5rem;
 
     border-bottom: 1px solid #e8e7ee;
     padding-left: 0;
     padding-right: 0;
     overflow: hidden;
+}
+
+.list-group-item:last-of-type{
+    border-bottom: none;
 }
 
 .list-group-item a{
@@ -119,7 +128,7 @@ button[disabled]{
     gap: 1rem;
 }
 
-.bookmark-create-form button{
+.bookmark-create-button{
     border: none;
     font-size: 1.5rem;
     background: transparent;
@@ -127,12 +136,20 @@ button[disabled]{
     color: #b3b3b3;
 }
 
-.bookmark-create-form button:hover{
+.bookmark-create-button:hover{
     cursor: pointer;
 }
 
-.bookmark-create-form button:active{
+.bookmark-create-button:active{
     color: #e86e8d;
+}
+
+.bookmark-create-button:valid{
+    color: pink;
+}
+
+.bookmark-create-button.error{
+    color: black
 }
 
 .search-form{
@@ -180,9 +197,24 @@ button[disabled]{
     color: white;
 }
 
-@media screen and (min-width: 768px){
+.delete-button{
+    border: none;
+    background: transparent;
+    width: 30px;
+    height: 30px;
+    align-self: center;
+    color: #bfbebe;
+}
+
+.delete-button:active,
+.delete-button:hover{
+    color: black;
+    transition: color 1s;
+}
+
+@media (min-width: 768px){
     .list-group{
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        grid-template-rows: auto 1fr;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 2rem;
     }
 }

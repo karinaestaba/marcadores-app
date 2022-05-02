@@ -8,6 +8,8 @@ class Bookmark{
         this.bookmarkUrl = document.querySelector('.bookmark-create-url');
         this.bookmarkButton = document.querySelector('.bookmark-create-button');
         this.bookmarks = document.querySelector('.bookmarks');
+        
+        this.bookmarksDeleteButtons = document.querySelector('.delete-button');
 
         this.searchQuery = document.querySelector('.search-query');
         this.searchForm = document.querySelector('.search-form');
@@ -28,6 +30,15 @@ class Bookmark{
         this.bookmarkCreateForm.addEventListener('submit', this.createBookmark.bind(this));
 
         this.bookmarks.addEventListener('click', this.openBookmarkLink.bind(this));
+        
+        this.bookmarks.addEventListener('click', this.openBookmarkLink.bind(this));
+
+        document.addEventListener('click', (e) => {
+            const element = e.target;
+            if(element.classList.contains('delete-button')){
+                this.deleteBookmark(element.getAttribute('data-url'));
+            }
+        });
     }
 
     createBookmark(e){
@@ -82,6 +93,7 @@ class Bookmark{
                             <span class="small text-muted">${bookmark.url}</span>
                         </div>
                     </a>
+                    <button class="delete-button" data-url="${bookmark.url}">⛌</button>
                 </li>`;
     }
 
@@ -98,6 +110,14 @@ class Bookmark{
         this.bookmarks.innerHTML = '';
     }
 
+    deleteBookmark(url){
+        let confirmDelete = confirm('¿Segura quieres eliminar el marcador?');
+        if(!confirmDelete) return;
+
+        localStorage.removeItem(url);
+        this.showBookmarks();
+    }
+
     openBookmarkLink(e){
         if(e.target.href){
             e.preventDefault();
@@ -107,12 +127,14 @@ class Bookmark{
 
     reportError(error, url){
         this.messageError.classList.remove('d-none');
+        this.bookmarkButton.classList.add('error');
         this.messageError.innerHTML = `Ocurrió un error al intentar acceder a ${url}: ${error}`;
 
         setTimeout(() => {
             this.messageError.innerHTML = null;
             this.messageError.classList.add('d-none');
-        }, 5000);
+            this.bookmarkButton.classList.remove('error');
+        }, 3000);
     }
 }
 
