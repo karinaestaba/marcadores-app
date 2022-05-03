@@ -99,9 +99,15 @@ class Bookmark{
 
     showBookmarks(){
         let bookmarksList = this.getLinks();
-        let html = bookmarksList.map(this.generateBookmarkHTML).join('');
 
-        this.bookmarks.innerHTML = `<ul class="list-group">${html}</ul>`;
+        if(bookmarksList.length > 0){
+            let html = bookmarksList.map(this.generateBookmarkHTML).join('');
+
+            this.bookmarks.innerHTML = `<ul class="list-group">${html}</ul>`;
+        }
+        else{
+            this.bookmarks.innerHTML = '<p class="no-results">- No hay resultados 🤔-</p>'
+        }
     }
 
     deleteBookmarks(){
