@@ -16,21 +16,34 @@
         <div class="alert alert-warning d-none error-message"></div>
         
         <section class="bookmark-create my-3">
-            <form class="bookmark-create-form px-0">
-                <input type="url" class="bookmark-create-url form-control" placeholder="URL" required>
-                <button type="submit" class="bookmark-create-button" disabled >
-                    ♡
-                </button>
+            <form class="bookmark-create-form px-0" spellcheck="false">
+                <select id="bookmark-type" class="bookmark-type form control">
+                    <option value="utilidad">Utilidad</option>
+                    <option value="web">Web</option>
+                    <option value="desarrollo">Desarrollo</option>
+                    <option value="frontend">Frontend</option>
+                    <option value="backend">Backend</option>
+                    <option value="db">Base de datos</option>
+                    <option value="herramienta">Herramienta</option>
+                    <option value="tutorial">Tutorial</option>
+                    <option value="entretenimiento">Entretenimiento</option>
+                    <option value="idioma">Idiomas</option>
+                    <option value="solucion">Solución</option>
+                    <option value="otros" selected>Otros</option>
+                </select>
+                
+                <div class="form-group">
+                    <input type="url" class="bookmark-create-url form-control" placeholder="URL" required>
+                    <button type="submit" class="bookmark-create-button" disabled ></button>
+                </div>
             </form>
         </section>
 
         <section class="search-bar my-3">
-            <form class="search-form px-0" id="search-form">
+            <form class="search-form px-0" id="search-form" spellcheck="false">
                 <input type="text" class="search-query form-control" placeholder="Buscar" required>
                 <button type="button" class="search-button" disabled >
-                    <span class="icon">
-                        ⚲
-                    </span>
+                    <span class="icon">⚲</span>
                 </button>
             </form>
         </section>

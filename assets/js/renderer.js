@@ -6,6 +6,7 @@ class Bookmark{
         
         this.bookmarkCreateForm = document.querySelector('.bookmark-create-form');
         this.bookmarkUrl = document.querySelector('.bookmark-create-url');
+        this.bookmarkType = document.querySelector('.bookmark-type');
         this.bookmarkButton = document.querySelector('.bookmark-create-button');
         this.bookmarks = document.querySelector('.bookmarks');
         
@@ -45,12 +46,13 @@ class Bookmark{
         e.preventDefault();
 
         const url = this.bookmarkUrl.value;
+        const type = this.bookmarkType.value;
 
         fetch(url)
             .then(response => response.text())
             .then(this.extractContent.bind(this))
             .then(this.findPageTitle)
-            .then(title => this.storeBookmark(url, title))
+            .then(title => this.storeBookmark(url, title, type))
             .then(this.clearForm.bind(this))
             .then(this.showBookmarks.bind(this))
             .catch(error => this.reportError(error, url));
@@ -64,8 +66,9 @@ class Bookmark{
         return html.querySelector('title').innerText;
     }
 
-    storeBookmark(url, title){
-        localStorage.setItem(url, JSON.stringify({title:title, url:url}));
+    storeBookmark(url, title, type){
+        let currentDate = new Date();
+        localStorage.setItem(url, JSON.stringify({title:title, url:url, type:type, date: currentDate.getTime()}));
     }
 
     clearForm(){
@@ -74,15 +77,24 @@ class Bookmark{
 
     getLinks(){
         let links = Object.keys(localStorage).map(key => JSON.parse(localStorage.getItem(key)));
+        let query = this.searchQuery.value.toLowerCase();
 
         if(this.searchQuery.value.length > 0){
-            links = links.filter(link => link.title.toLowerCase().indexOf(this.searchQuery.value.toLocaleLowerCase()) > -1);
+            links = links.filter(link => link.title.toLowerCase().indexOf(query) > -1 || (link.type && link.type.toLowerCase().indexOf(query) > -1));
         }
 
-        return links;
+        return links.sort((a, b) => {
+            let keyA = new Date(a.date), keyB = new Date(b.date);
+            return (keyA > keyB) ? -1 : (keyA < keyB ? 1 : 0);
+        });
     }
 
     generateBookmarkHTML(bookmark){
+        let type = '';
+        if(bookmark?.type?.length > 0){
+            type = `<span class="badge badge-info">${bookmark.type}</span>`;
+        }
+
         return `<li class="list-group-item py-4">
                     <span class="icon">🗋</span>
                     <a href="${bookmark.url}" target="_blank">
@@ -91,6 +103,8 @@ class Bookmark{
                         </h2>
                         <div>
                             <span class="small text-muted">${bookmark.url}</span>
+                            <br>
+                            ${type}
                         </div>
                     </a>
                     <button class="delete-button" data-url="${bookmark.url}">⛌</button>
@@ -106,7 +120,7 @@ class Bookmark{
             this.bookmarks.innerHTML = `<ul class="list-group">${html}</ul>`;
         }
         else{
-            this.bookmarks.innerHTML = '<p class="no-results">- No hay resultados 🤔-</p>'
+            this.bookmarks.innerHTML = '<p class="no-results">No hay resultados <span>⚠</span></p>'
         }
     }
 
