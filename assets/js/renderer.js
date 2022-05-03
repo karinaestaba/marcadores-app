@@ -105,6 +105,7 @@ class Bookmark{
     }
 
     deleteBookmarks(){
+        if(!confirm('¿Segura quieres eliminar todos los marcadores?')) return;
         localStorage.clear();
 
         this.bookmarks.innerHTML = '';
@@ -136,6 +137,29 @@ class Bookmark{
             this.bookmarkButton.classList.remove('error');
         }, 3000);
     }
+
+    exportBookmarksToCsv(){
+        let data = '';
+
+        this.getLinks().forEach(function(item){
+            data += item.url + "\r\n";
+        });
+
+        let file = new Blob([data], {type: 'text/csv;charset=utf-8;'});
+        let targetLink = document.createElement("a"),
+        
+        url = URL.createObjectURL(file);
+        targetLink.href = url;
+        targetLink.download = 'marcadores.csv';
+
+        document.body.appendChild(targetLink);
+        targetLink.click();
+
+        setTimeout(function() {
+            document.body.removeChild(targetLink);
+            window.URL.revokeObjectURL(url);  
+        }, 0);
+    }
 }
 
 let bookmarksObj = new Bookmark();
@@ -145,3 +169,7 @@ bookmarksObj.showBookmarks();
 ipcRenderer.on('actions:delete-bookmarks', (e, action)  => {
     bookmarksObj.deleteBookmarks();
 })
+
+ipcRenderer.on('actions:export-bookmarks', (e, action) => {
+    bookmarksObj.exportBookmarksToCsv();
+});

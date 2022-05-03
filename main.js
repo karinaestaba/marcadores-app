@@ -24,6 +24,12 @@ function createMainWindow(){
         {
             label: 'File',
             submenu: [
+                {
+                    label: 'Exportar marcadores',
+                    click(){
+                        mainWindow.webContents.send('actions:export-bookmarks');
+                    }
+                },
                {
                    label: 'Eliminar marcadores',
                    click(){
