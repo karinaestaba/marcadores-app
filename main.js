@@ -47,23 +47,6 @@ function createMainWindow(){
        }
     ];
 
-    if(!app.isPackaged){
-        templateMenu.push({
-            label: 'DevTools',
-            submenu: [
-                {
-                    label: 'Show/Hide Dev Tools',
-                    accelerator: 'Ctrl+D',
-                    click(item, focusedWindow){
-                        focusedWindow.toggleDevTools();
-                    }
-                },
-                {
-                    role: 'reload'
-                }
-            ]
-        });
-    }
 
     const mainMenu = Menu.buildFromTemplate(templateMenu);
 
